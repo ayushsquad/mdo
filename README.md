@@ -89,7 +89,7 @@ mdo docs --port 3000
 ## Flags
 
 - `--dark` uses the GitHub dark theme
-- `--theme <name>` selects `github`, `github-dark`, `sepia`, `earth`, `earthsong`, `gruvbox`, or `dracula`
+- `--theme <name>` selects `github-light`, `github-dark`, `belafonte-day`, `belafonte-night`, `earth`, `earthsong`, or `dracula`
 - `--output <file>` writes HTML to disk instead of opening the browser; file mode only
 - `--port <port>` uses a fixed port for folder mode
 - `--help` prints usage information
