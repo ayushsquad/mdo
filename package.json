@@ -1,39 +1,39 @@
 {
-  "name": "@ayushshanker/mdo",
-  "version": "0.1.0",
-  "description": "Preview Markdown files and folders in the browser",
-  "bin": {
-    "mdo": "bin/mdo.js"
-  },
-  "type": "commonjs",
-  "files": [
-    "bin",
-    "lib"
-  ],
-  "engines": {
-    "node": ">=20"
-  },
-  "publishConfig": {
-    "access": "public"
-  },
-  "scripts": {
-    "start": "node bin/mdo.js",
-    "test": "node --test"
-  },
-  "keywords": [
-    "markdown",
-    "cli",
-    "preview",
-    "browser"
-  ],
-  "license": "MIT",
-  "dependencies": {
-    "commander": "^14.0.1",
-    "github-markdown-css": "^5.8.1",
-    "highlight.js": "^11.11.1",
-    "markdown-it": "^14.1.0",
-    "markdown-it-anchor": "^9.2.0",
-    "markdown-it-task-lists": "^2.1.1",
-    "open": "^10.2.0"
-  }
+	"name": "@ayushshanker/mdo",
+	"version": "0.2.0",
+	"description": "Preview Markdown files and folders in the browser",
+	"bin": {
+		"mdo": "bin/mdo.js"
+	},
+	"type": "commonjs",
+	"files": [
+		"bin",
+		"lib"
+	],
+	"engines": {
+		"node": ">=20"
+	},
+	"publishConfig": {
+		"access": "public"
+	},
+	"scripts": {
+		"start": "node bin/mdo.js",
+		"test": "node --test"
+	},
+	"keywords": [
+		"markdown",
+		"cli",
+		"preview",
+		"browser"
+	],
+	"license": "MIT",
+	"dependencies": {
+		"commander": "^14.0.1",
+		"github-markdown-css": "^5.8.1",
+		"highlight.js": "^11.11.1",
+		"markdown-it": "^14.1.0",
+		"markdown-it-anchor": "^9.2.0",
+		"markdown-it-task-lists": "^2.1.1",
+		"open": "^10.2.0"
+	}
 }
