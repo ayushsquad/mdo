@@ -252,7 +252,7 @@ test("folder mode exits promptly on SIGINT", async () => {
 const browserPath = require.resolve('./lib/browser');
 require.cache[browserPath] = { exports: { openInBrowser: async () => { throw new Error('open failed'); } } };
 const { runFolderMode } = require('./lib/folder-mode');
-runFolderMode({ directoryPath: '.', themeName: 'github' }).catch((error) => {
+runFolderMode({ directoryPath: '.', themeName: 'github-light' }).catch((error) => {
   console.error(error && (error.stack || error.message || String(error)));
   process.exit(1);
 });
@@ -298,4 +298,33 @@ runFolderMode({ directoryPath: '.', themeName: 'github' }).catch((error) => {
 
   assert.equal(exitCode, 130);
   assert.ok(Date.now() - startedAt < 1000);
+});
+
+test("cli lists themes when --theme has no value", async () => {
+  const child = spawn(process.execPath, ["bin/mdo.js", "README.md", "--theme"], {
+    cwd: path.resolve(__dirname, ".."),
+    stdio: ["ignore", "pipe", "pipe"]
+  });
+
+  let stdout = "";
+  let stderr = "";
+  child.stdout.setEncoding("utf8");
+  child.stderr.setEncoding("utf8");
+  child.stdout.on("data", (chunk) => {
+    stdout += chunk;
+  });
+  child.stderr.on("data", (chunk) => {
+    stderr += chunk;
+  });
+
+  const exitCode = await new Promise((resolve, reject) => {
+    child.once("error", reject);
+    child.once("exit", (code) => resolve(code));
+  });
+
+  assert.equal(exitCode, 0);
+  assert.match(stdout, /Available themes:/);
+  assert.match(stdout, /github-light/);
+  assert.match(stdout, /belafonte-night/);
+  assert.equal(stderr, "");
 });
