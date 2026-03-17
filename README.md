@@ -1,6 +1,6 @@
-# @ayushshanker/mdo
+# mdo
 
-`@ayushshanker/mdo` is the npm package name. It installs the `mdo` CLI for previewing Markdown files and folders in your browser.
+Contains `mdo` CLI for previewing Markdown files and folders in your browser.
 
 ## Install
 
