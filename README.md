@@ -60,6 +60,16 @@ mdo README.md --theme gruvbox
 mdo README.md --dark
 ```
 
+Render math:
+
+```markdown
+Inline: $a_b$ or \(a_b\)
+
+\[
+\frac{1}{2}
+\]
+```
+
 ## Modes
 
 ### File Mode
@@ -100,3 +110,5 @@ mdo docs --port 3000
 - `mdo` with no path is the same as `mdo .`
 - `--output` only works for file mode
 - Folder mode binds to loopback only and is intended for local preview
+- Math is rendered server-side with MathJax-compatible TeX syntax
+- Inline math supports `$...$` and `\(...\)`; display math supports `$$...$$` and `\[...\]`

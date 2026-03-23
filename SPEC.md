@@ -104,6 +104,8 @@ Recommended implementation: `remark` + `remark-gfm` + `rehype` pipeline, or `mar
 
 **Mermaid diagrams:** Fenced code blocks tagged `mermaid` are rendered as `<pre class="mermaid">...</pre>` or equivalent Mermaid bootstrap markup. Mermaid 11.x or newer is acceptable. Theme follows `--dark` using `dark` vs `default`.
 
+**MathJax equations:** TeX math should render correctly for inline and display math. Supported delimiters may include `$...$`, `$$...$$`, `\(...\)`, and `\[...\]`. Server-side MathJax rendering is acceptable and preferred when it avoids delimiter corruption during markdown parsing.
+
 **Raw HTML:** Inline HTML inside markdown is passed through.
 
 ## Security and performance

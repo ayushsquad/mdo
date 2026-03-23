@@ -79,6 +79,45 @@ test("file mode supports new brown themes", async () => {
   assert.doesNotMatch(html, /#d79921/);
 });
 
+test("file mode renders MathJax expressions and leaves code blocks untouched", async () => {
+  const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "mdo-math-test-"));
+  const markdownPath = path.join(tmpDir, "math.md");
+  const outputPath = path.join(tmpDir, "math.html");
+
+  await fs.writeFile(
+    markdownPath,
+    [
+      "# Math",
+      "",
+      "Inline $a_b$ and \\(c_d\\).",
+      "",
+      "\\[",
+      "\\frac{1}{2}",
+      "\\]",
+      "",
+      "```txt",
+      "$not_math$ and \\(still_not_math\\)",
+      "```"
+    ].join("\n"),
+    "utf8"
+  );
+
+  const { runFileMode } = require("../lib/file-mode");
+  await runFileMode({
+    cwdRealPath: await fs.realpath(tmpDir),
+    filePath: markdownPath,
+    outputPath,
+    themeName: "github-light"
+  });
+
+  const html = await fs.readFile(outputPath, "utf8");
+  assert.equal((html.match(/<mjx-container/g) || []).length, 3);
+  assert.equal((html.match(/\\\(/g) || []).length, 1);
+  assert.doesNotMatch(html, /\\\[/);
+  assert.match(html, /\$not_math\$ and \\\(still_not_math\\\)/);
+  assert.match(html, /language-txt/);
+});
+
 test("file mode keeps generated html when browser open fails", async () => {
   const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "mdo-file-open-fail-"));
   const markdownPath = path.join(tmpDir, "notes.md");
