@@ -1,6 +1,6 @@
 {
 	"name": "@ayushshanker/mdo",
-	"version": "0.5.0",
+	"version": "0.5.1",
 	"description": "Preview Markdown files and folders in the browser",
 	"bin": {
 		"mdo": "bin/mdo.js"

@@ -79,6 +79,34 @@ test("file mode supports new brown themes", async () => {
   assert.doesNotMatch(html, /#d79921/);
 });
 
+test("file mode supports print theme with monochrome code blocks", async () => {
+  const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "mdo-print-theme-test-"));
+  const markdownPath = path.join(tmpDir, "notes.md");
+  const outputPath = path.join(tmpDir, "notes.html");
+
+  await fs.writeFile(markdownPath, "# Notes\n\n```js\nconsole.log('print')\n```\n", "utf8");
+
+  const { runFileMode } = require("../lib/file-mode");
+  await runFileMode({
+    cwdRealPath: await fs.realpath(tmpDir),
+    filePath: markdownPath,
+    outputPath,
+    themeName: "print"
+  });
+
+  const html = await fs.readFile(outputPath, "utf8");
+  assert.match(html, /background:\s*#ffffff/);
+  assert.match(html, /class="mdo-wrap-guide"/);
+  assert.doesNotMatch(html, /border:\s*1px dotted #666666/);
+  assert.match(html, /\.markdown-body pre\s*\{[\s\S]*background-image:\s*radial-gradient\(circle, #999999 0\.75px, transparent 0\.9px\)/);
+  assert.match(html, /\.markdown-body pre\s*\{[\s\S]*background-size:\s*7px 1px, 7px 1px, 1px 7px, 1px 7px/);
+  assert.match(html, /\.markdown-body pre,\s*\.markdown-body pre code,\s*\.markdown-body \.hljs\s*\{[\s\S]*background-color:\s*#ffffff/);
+  assert.match(html, /\.markdown-body pre code,\s*\.markdown-body \.hljs\s*\{[\s\S]*white-space:\s*pre-wrap/);
+  assert.match(html, /\.markdown-body \.mdo-wrap-guide\s*\{[\s\S]*padding-left:\s*7ch/);
+  assert.match(html, /%E2%86%B3/);
+  assert.match(html, /\.markdown-body \.hljs,\s*\.markdown-body \.hljs \*\s*\{[\s\S]*color:\s*#111111 !important/);
+});
+
 test("file mode renders MathJax expressions and leaves code blocks untouched", async () => {
   const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "mdo-math-test-"));
   const markdownPath = path.join(tmpDir, "math.md");
@@ -365,5 +393,6 @@ test("cli lists themes when --theme has no value", async () => {
   assert.match(stdout, /Available themes:/);
   assert.match(stdout, /github-light/);
   assert.match(stdout, /belafonte-night/);
+  assert.match(stdout, /print/);
   assert.equal(stderr, "");
 });

@@ -56,7 +56,7 @@ Use a theme:
 
 ```bash
 mdo README.md --theme earthsong
-mdo README.md --theme gruvbox
+mdo README.md --theme print
 mdo README.md --dark
 ```
 
@@ -99,7 +99,7 @@ mdo docs --port 3000
 ## Flags
 
 - `--dark` uses the GitHub dark theme
-- `--theme <name>` selects `github-light`, `github-dark`, `belafonte-day`, `belafonte-night`, `earth`, `earthsong`, or `dracula`
+- `--theme <name>` selects `github-light`, `github-dark`, `belafonte-day`, `belafonte-night`, `earth`, `earthsong`, `dracula`, or `print`
 - `--output <file>` writes HTML to disk instead of opening the browser; file mode only
 - `--port <port>` uses a fixed port for folder mode
 - `--help` prints usage information
