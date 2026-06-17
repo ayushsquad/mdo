@@ -78,6 +78,13 @@ Starts a local HTTP server and opens a browsable directory listing.
 | `--version` | — | Print package version and exit |
 | `--help` | — | Print usage and exit |
 
+## Configuration file
+
+- When no theme is selected via `--theme` or `--dark`, the default theme is read from `mdo.json`
+- Location is `$XDG_CONFIG_HOME/mdo.json`, falling back to `~/.config/mdo.json`
+- The `theme` key selects any named theme; precedence is `--theme` > `--dark` > config file > `github-light`
+- A missing file is ignored silently; invalid JSON or an unknown theme name is ignored with a warning on stderr
+
 ## CLI behavior
 
 - A missing positional argument defaults to the current working directory

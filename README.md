@@ -70,6 +70,21 @@ Inline: $a_b$ or \(a_b\)
 \]
 ```
 
+## Configuration
+
+When no theme is given on the command line, `mdo` reads a default theme from
+`~/.config/mdo.json` (or `$XDG_CONFIG_HOME/mdo.json`):
+
+```json
+{
+  "theme": "github-dark"
+}
+```
+
+Theme precedence is `--theme` > `--dark` > config file > `github-light`. A
+missing config file is ignored; invalid JSON or an unknown theme name is
+ignored with a warning.
+
 ## Modes
 
 ### File Mode
