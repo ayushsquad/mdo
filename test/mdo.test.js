@@ -396,3 +396,32 @@ test("cli lists themes when --theme has no value", async () => {
   assert.match(stdout, /print/);
   assert.equal(stderr, "");
 });
+
+test("stripFrontmatter removes leading YAML frontmatter only", () => {
+  const { stripFrontmatter } = require("../lib/renderer");
+  assert.equal(stripFrontmatter("---\nstatus: x\nsources:\n  a: 1\n---\n\n# Title\n"), "\n# Title\n");
+  assert.equal(stripFrontmatter("---\r\nk: v\r\n---\r\nBody"), "Body");
+  assert.equal(stripFrontmatter("﻿---\nk: v\n...\nBody"), "Body");
+  assert.equal(stripFrontmatter("# Title\n\n---\n\nmore\n---\n"), "# Title\n\n---\n\nmore\n---\n");
+});
+
+test("file mode does not render frontmatter", async () => {
+  const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "mdo-frontmatter-test-"));
+  const markdownPath = path.join(tmpDir, "notes.md");
+  const outputPath = path.join(tmpDir, "notes.html");
+
+  await fs.writeFile(markdownPath, "---\nticker: AXISBANK\n---\n\n# Notes\n", "utf8");
+
+  const { runFileMode } = require("../lib/file-mode");
+  await runFileMode({
+    cwdRealPath: await fs.realpath(tmpDir),
+    filePath: markdownPath,
+    outputPath,
+    themeName: "github-light"
+  });
+
+  const html = await fs.readFile(outputPath, "utf8");
+  assert.match(html, /<h1[^>]*>.*Notes/);
+  assert.doesNotMatch(html, /AXISBANK/);
+  assert.doesNotMatch(html, /<hr>/);
+});
